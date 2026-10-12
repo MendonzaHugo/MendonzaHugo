@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "task-manager",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  // O mesmo Worker serve o frontend (arquivos estáticos) e a API em /api/*.
+  // Mesma origem = cookies de sessão simples, sem CORS.
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "task-manager",
+      // Substitua pelo id retornado por `wrangler d1 create task-manager` (veja docs/SETUP.md).
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  "vars": {
+    // URL pública do app. Em produção, troque pela URL do seu workers.dev.
+    "APP_URL": "http://localhost:5173"
+  }
+  // Segredos (wrangler secret put): ALLOWED_EMAIL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, ENCRYPTION_KEY
+}

@@ -22,7 +22,7 @@
 
 | Camada | Tecnologia | Hospedagem gratuita |
 |---|---|---|
-| Frontend | React + TypeScript + Vite, PWA (instalável no celular) | Cloudflare Pages |
+| Frontend | React + TypeScript + Vite, PWA (instalável no celular) | Cloudflare Workers (arquivos estáticos) |
 | UI | Tailwind CSS + componentes próprios; `dnd-kit` para arrastar cartões | — |
 | Estado/sincronização | TanStack Query (cache, atualização otimista, refetch ao focar) | — |
 | API | Hono (TypeScript) em Cloudflare Workers | Workers Free |
@@ -42,7 +42,8 @@
 | Vercel + Neon | Cron do plano gratuito é limitado a execução diária — insuficiente para lembretes |
 | Site 100% estático (sem backend) | Não há como disparar lembretes com o app fechado nem guardar tokens do Google com segurança |
 
-Cloudflare oferece frontend, API, banco e cron em um só lugar, sem pausa por inatividade, e com limites
+Cloudflare oferece frontend, API, banco e cron em um só lugar — o mesmo Worker serve os arquivos do app e a API
+em `/api/*`, na mesma origem (cookie de sessão simples, sem CORS) — sem pausa por inatividade, e com limites
 muito acima do que um usuário único consome (100 mil requisições/dia na API; a D1 gratuita comporta milhões
 de leituras por dia).
 
@@ -56,8 +57,8 @@ flowchart LR
   end
 
   subgraph Cloudflare
-    PAGES[Pages<br/>frontend estático]
-    API[Worker / Hono<br/>API REST]
+    PAGES[Arquivos estáticos<br/>do frontend]
+    API[Worker / Hono<br/>API REST em /api]
     CRON[Cron Triggers]
     DB[(D1 / SQLite)]
   end

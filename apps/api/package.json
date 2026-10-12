@@ -1,0 +1,30 @@
+{
+  "name": "@tm/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "mkdir -p ../web/dist && wrangler dev --port 8787",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc -p .",
+    "test": "mkdir -p ../web/dist && vitest run",
+    "cf-typegen": "wrangler types",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "0.9.1",
+    "@tm/shared": "workspace:*",
+    "drizzle-orm": "0.45.4",
+    "hono": "4.13.13",
+    "zod": "4.3.3"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.4.0",
+    "@cloudflare/workers-types": "5.20261012.1",
+    "drizzle-kit": "0.31.11",
+    "vitest": "4.1.11",
+    "wrangler": "4.149.0"
+  }
+}

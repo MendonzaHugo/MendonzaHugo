@@ -1,0 +1,9 @@
+# Copie para .dev.vars (não versionado) e preencha.
+# Único e-mail Google autorizado a entrar.
+ALLOWED_EMAIL=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+# Gere com: openssl rand -base64 32
+ENCRYPTION_KEY=
+# Permite entrar sem Google no ambiente local (botão "Entrar (dev)"). Nunca defina em produção.
+DEV_LOGIN=true
